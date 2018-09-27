@@ -1,6 +1,9 @@
 Intuit OAuth Python Client
 ==========================
 
+.. image:: https://travis-ci.com/intuit/oauth-pythonclient.svg?branch=master
+    :target: https://travis-ci.com/intuit/oauth-pythonclient
+
 This client library is meant to work with Intuit's OAuth and OpenID implementation. The `AuthClient` object response can be used for User Info API, Accounting API and Payments API. This library supports:
 
 - Generating Authorization URL
