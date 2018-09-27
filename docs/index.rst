@@ -31,6 +31,11 @@ Docs
    user-guide
    Reference <reference/index>
 
+Note
+----
+
+The API endpoints in this library only work with TLS 1.2
+
 Indices and tables
 ------------------
 
