@@ -11,28 +11,28 @@ This client library is meant to work with Intuit's OAuth and OpenID implementati
 - Revoking OAuth2 Token
 - Migrating tokens from OAuth1.0 to OAuth2
 
-Install
--------
+.. Install
+.. -------
 
-Using pip: ::
+.. Using pip: ::
     
-    $ pip install intuit-oauth
+..      $ pip install intuit-oauth
 
 Documentation
 -------------
 
-Usage and Reference Documentation can be found at <insert readthedocs link>
+.. Usage and Reference Documentation can be found at <insert readthedocs link>
 
 Issues and Contributions
 ------------------------
 
-Please open an `issue <https://github.com/intuit/oauth-pythonclient/issues>` on GitHub if you have a problem, suggestion, or other comment.
+Please open an `issue <https://github.com/intuit/oauth-pythonclient/issues>`_ on GitHub if you have a problem, suggestion, or other comment.
 
 Pull requests are welcome and encouraged! Any contributions should include new or updated unit tests as necessary to maintain thorough test coverage.
 
 License
 -------
 
-intuit-oauth is provided under Apache 2.0 found `here <https://github.com/intuit/oauth-pythonclient/blob/master/LICENSE>`__
+intuit-oauth is provided under Apache 2.0 which is found `here <https://github.com/intuit/oauth-pythonclient/blob/master/LICENSE>`__
 
 
