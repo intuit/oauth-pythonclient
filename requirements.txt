@@ -4,6 +4,6 @@ requests>=2.13.0
 mock>=2.0.0
 requests_oauthlib>=1.0.0
 pytest>=3.8.0
-six>=1.11.0
+six>=1.10.0
 enum34
 python-coveralls
