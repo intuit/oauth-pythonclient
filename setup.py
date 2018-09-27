@@ -42,6 +42,7 @@ setuptools.setup(
         'requests_oauthlib>=1.0.0',
         'pytest>=3.8.0',
         'six>=1.11.0',
+        'enum34; python_version < "3.4"',
     ],
     license='Apache 2.0',
     keywords='intuit quickbooks oauth auth openid client'
