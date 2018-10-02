@@ -33,7 +33,7 @@ Using `pip <https://pypi.org/project/pip/>`_: ::
 Documentation
 -------------
 
-Usage and Reference Documentation can be found at `oauth-pythonclient.readthedocs.io <oauth-pythonclient.readthedocs.io>`_ 
+Usage and Reference Documentation can be found at `oauth-pythonclient.readthedocs.io <https://oauth-pythonclient.readthedocs.io/en/latest/>`_ 
 
 Issues and Contributions
 ------------------------
