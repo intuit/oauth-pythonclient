@@ -3,8 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-intuit-oauth 
-============
+   
+Intuit's OAuth2 and OpenID Client 
+=================================
+
+`View on GitHub <https://github.com/intuit/oauth-pythonclient>`_
 
 This client library is meant to work with Intuit's OAuth and OpenID implementation. The `bearer_token` response can be used for User Info API, Accounting API and Payments API. It supports:
 
@@ -18,23 +21,30 @@ This client library is meant to work with Intuit's OAuth and OpenID implementati
 
 Install Client 
 --------------
-::
+This library can be installed using `pip <https://pypi.org/project/pip/>`_::
 
     $ pip install intuit-oauth
+
+View it on GitHub `here <https://github.com/intuit/oauth-pythonclient>`_
 
 Docs
 ----
 
 .. toctree::
-   :maxdepth: 2
+    :maxdepth: 2
 
-   user-guide
-   Reference <reference/index>
+    user-guide
+    Reference <reference/index>
 
 Note
 ----
 
 The API endpoints in this library only work with TLS 1.2
+
+License
+-------
+
+This library is provided under Apache 2.0 which is found `here <https://github.com/intuit/oauth-pythonclient/blob/master/LICENSE>`_
 
 Indices and tables
 ------------------

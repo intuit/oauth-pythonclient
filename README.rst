@@ -1,8 +1,18 @@
-Intuit OAuth Python Client
-==========================
+Intuit OAuth2 and OpenID Python Client
+======================================
 
-.. image:: https://travis-ci.com/intuit/oauth-pythonclient.svg?branch=master
+|build| |coverage| |docs|
+
+.. |build| image:: https://travis-ci.com/intuit/oauth-pythonclient.svg?branch=master
     :target: https://travis-ci.com/intuit/oauth-pythonclient
+
+.. |coverage| image:: https://coveralls.io/repos/github/intuit/oauth-pythonclient/badge.svg?branch=master
+    :target: https://coveralls.io/github/intuit/oauth-pythonclient?branch=master
+
+.. |docs| image:: https://readthedocs.org/projects/oauth-pythonclient/badge/?version=latest
+    :target: https://oauth-pythonclient.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 
 This client library is meant to work with Intuit's OAuth and OpenID implementation. The `AuthClient` object response can be used for User Info API, Accounting API and Payments API. This library supports:
 
@@ -24,7 +34,7 @@ This client library is meant to work with Intuit's OAuth and OpenID implementati
 Documentation
 -------------
 
-.. Usage and Reference Documentation can be found at <insert readthedocs link>
+.. Usage and Reference Documentation can be found `here <https://oauth-pythonclient.readthedocs.io/en/latest/>`_
 
 Issues and Contributions
 ------------------------
