@@ -1,4 +1,4 @@
-Intuit OAuth2 and OpenID Python Client
+Intuit's OAuth2 and OpenID Python Client
 ======================================
 
 |build| |coverage| |docs|
@@ -13,7 +13,6 @@ Intuit OAuth2 and OpenID Python Client
     :target: https://oauth-pythonclient.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
-
 This client library is meant to work with Intuit's OAuth and OpenID implementation. The `AuthClient` object response can be used for User Info API, Accounting API and Payments API. This library supports:
 
 - Generating Authorization URL
@@ -24,17 +23,17 @@ This client library is meant to work with Intuit's OAuth and OpenID implementati
 - Revoking OAuth2 Token
 - Migrating tokens from OAuth1.0 to OAuth2
 
-.. Install
-.. -------
+Install
+-------
 
-.. Using pip: ::
+Using `pip <https://pypi.org/project/pip/>`_: ::
     
-..      $ pip install intuit-oauth
+    $ pip install intuit-oauth
 
 Documentation
 -------------
 
-.. Usage and Reference Documentation can be found `here <https://oauth-pythonclient.readthedocs.io/en/latest/>`_
+Usage and Reference Documentation can be found at `oauth-pythonclient.readthedocs.io <oauth-pythonclient.readthedocs.io>`_ 
 
 Issues and Contributions
 ------------------------
