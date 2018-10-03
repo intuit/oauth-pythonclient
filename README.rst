@@ -1,5 +1,5 @@
 Intuit's OAuth2 and OpenID Python Client
-======================================
+========================================
 
 |build| |coverage| |docs|
 

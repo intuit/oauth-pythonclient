@@ -14,7 +14,8 @@
 
 import os
 import re 
-import setuptools
+from setuptools import setup
+from setuptools import find_packages
 
 def get_version():
     init_file_path = os.path.join('intuitlib', '__init__.py')
@@ -26,7 +27,7 @@ def get_version():
             return match.group(1)
     raise RuntimeError('Unable to find version string in %s.' % (init_file_path,))
 
-setuptools.setup(
+setup(
     name='intuit-oauth',
     version=get_version(),
     description='Intuit OAuth Client',
@@ -34,6 +35,8 @@ setuptools.setup(
     author='Intuit Inc',
     author_email='IDGSDK@intuit.com',
     url='https://github.com/intuit/oauth-pythonclient',
+    packages=find_packages(exclude=('tests*')),
+    namespace_packages=('intuitlib',),
     install_requires=[
         'python_jose>=2.0.2',
         'future>=0.16.0',
