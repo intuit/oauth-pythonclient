@@ -40,7 +40,7 @@ setup(
         'six>=1.10.0',
         'enum34',
         'python-coveralls',
-        'coverage==4.0.3'
+        'coverage>=4.4'
     ],
     license='Apache 2.0',
     keywords='intuit quickbooks oauth auth openid client'
