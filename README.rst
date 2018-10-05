@@ -1,4 +1,4 @@
-.. image:: views/Sample.png 
+.. image:: views/SDK.png 
    :target: https://help.developer.intuit.com/s/samplefeedback?cid=1110&repoName=oauth-pythonclient
 
 Intuit's OAuth2 and OpenID Python Client
@@ -54,5 +54,3 @@ License
 -------
 
 This library is provided under Apache 2.0 which is found `here <https://github.com/intuit/oauth-pythonclient/blob/master/LICENSE>`__
-
-.. _ss1: https://help.developer.intuit.com/s/samplefeedback?cid=1110&repoName=oauth-pythonclient
