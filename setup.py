@@ -12,30 +12,22 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.
 
-import os
-import re 
 from setuptools import setup
 from setuptools import find_packages
 
-def get_version():
-    init_file_path = os.path.join('intuitlib', '__init__.py')
-    init_file_lines = open(init_file_path, 'rt').readlines()
-    version = r"^__version__ = ['\"]([^'\"]*)['\"]"
-    for line in init_file_lines:
-        match = re.search(version, line, re.M)
-        if match:
-            return match.group(1)
-    raise RuntimeError('Unable to find version string in %s.' % (init_file_path,))
+version = {}
+with open("./intuitlib/version.py") as fp:
+    exec(fp.read(), version)
 
 setup(
     name='intuit-oauth',
-    version=get_version(),
+    version=version['__version__'],
     description='Intuit OAuth Client',
     long_description=open('README.rst').read().strip(),
     author='Intuit Inc',
     author_email='IDGSDK@intuit.com',
     url='https://github.com/intuit/oauth-pythonclient',
-    packages=find_packages(exclude=('tests*')),
+    packages=find_packages(exclude=('tests*',)),
     namespace_packages=('intuitlib',),
     install_requires=[
         'python_jose>=2.0.2',
@@ -48,6 +40,7 @@ setup(
         'six>=1.10.0',
         'enum34',
         'python-coveralls',
+        'coverage==4.0.3'
     ],
     license='Apache 2.0',
     keywords='intuit quickbooks oauth auth openid client'

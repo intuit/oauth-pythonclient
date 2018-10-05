@@ -15,7 +15,7 @@
 """This module contains static URLs 
 """
 import platform
-from intuitlib import __version__
+from intuitlib import version
 
 MIGRATION_URL = {
     'sandbox': 'https://developer-sandbox.api.intuit.com/v2/oauth2/tokens/migrate',
@@ -35,5 +35,5 @@ OS_MACHINE = platform.uname()[4]
 
 ACCEPT_HEADER = {
     'Accept': 'application/json',
-    'User-Agent': '{0}-{1}-{2}-{3} {4} {5} {6}'.format('Intuit-OAuthClient', __version__,'Python', PYTHON_VERSION, OS_SYSTEM, OS_RELEASE_VER, OS_MACHINE)
+    'User-Agent': '{0}-{1}-{2}-{3} {4} {5} {6}'.format('Intuit-OAuthClient', version.__version__,'Python', PYTHON_VERSION, OS_SYSTEM, OS_RELEASE_VER, OS_MACHINE)
 }

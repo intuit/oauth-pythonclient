@@ -45,6 +45,6 @@ Pull requests are welcome and encouraged! Any contributions should include new o
 License
 -------
 
-intuit-oauth is provided under Apache 2.0 which is found `here <https://github.com/intuit/oauth-pythonclient/blob/master/LICENSE>`__
+This library is provided under Apache 2.0 which is found `here <https://github.com/intuit/oauth-pythonclient/blob/master/LICENSE>`__
 
 
