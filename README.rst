@@ -1,6 +1,6 @@
 .. Sample Banner 
 .. image:: views/Sample.png 
-.. `ss1`_
+.. :target: `ss1`_
 
 Intuit's OAuth2 and OpenID Python Client
 ========================================
