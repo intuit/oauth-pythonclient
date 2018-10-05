@@ -1,6 +1,5 @@
-.. Sample Banner 
 .. image:: views/Sample.png 
-.. :target: `ss1`_
+   :target: https://help.developer.intuit.com/s/samplefeedback?cid=1110&repoName=oauth-pythonclient
 
 Intuit's OAuth2 and OpenID Python Client
 ========================================
