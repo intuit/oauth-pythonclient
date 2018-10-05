@@ -1,3 +1,5 @@
+.. |Sample Banner| image:: views/Sample.png |ss1|
+
 Intuit's OAuth2 and OpenID Python Client
 ========================================
 
@@ -35,6 +37,11 @@ Documentation
 
 Usage and Reference Documentation can be found at `oauth-pythonclient.readthedocs.io <https://oauth-pythonclient.readthedocs.io/en/latest/>`_ 
 
+Sample App
+----------
+
+Sample app for this library can be found at `IntuitDeveloper GitHub Org <https://github.com/IntuitDeveloper/SampleOAuth2_UsingPythonClient>`_
+
 Issues and Contributions
 ------------------------
 
@@ -47,4 +54,4 @@ License
 
 This library is provided under Apache 2.0 which is found `here <https://github.com/intuit/oauth-pythonclient/blob/master/LICENSE>`__
 
-
+|ss1| https://help.developer.intuit.com/s/samplefeedback?cid=1110&repoName=oauth-pythonclient
