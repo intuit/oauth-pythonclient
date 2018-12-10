@@ -29,3 +29,9 @@ class Scopes(Enum):
     ACCOUNTING = 'com.intuit.quickbooks.accounting'
     PAYMENT = 'com.intuit.quickbooks.payment'
     
+    # for whitelisted Beta apps only
+    PAYROLL = 'com.intuit.quickbooks.payroll'
+    PAYROLL_TIMETRACKING = 'com.intuit.quickbooks.payroll.timetracking'
+    PAROLL_BENEFITS = 'com.intuit.quickbooks.payroll.benefits'
+
+    
