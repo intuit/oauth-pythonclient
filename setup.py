@@ -35,12 +35,12 @@ setup(
         'requests>=2.13.0',
         'mock>=2.0.0',
         'requests_oauthlib>=1.0.0',
+        'coverage==4.0.3',
+        'python-coveralls>=2.9.0',
         'pytest>=3.8.0',
-        'pytest-cov>=2.6.0',
+        'pytest-cov==2.5.0',
         'six>=1.10.0',
-        'enum34',
-        'python-coveralls',
-        'coverage>=4.4'
+        'enum34>=1.1.5',
     ],
     license='Apache 2.0',
     keywords='intuit quickbooks oauth auth openid client'
