@@ -40,7 +40,7 @@ setup(
         'pytest>=3.8.0',
         'pytest-cov==2.5.0',
         'six>=1.10.0',
-        'enum34>=1.1.5',
+        'enum-compat',
     ],
     license='Apache 2.0',
     keywords='intuit quickbooks oauth auth openid client'

@@ -8,5 +8,6 @@ python-coveralls>=2.9.0
 pytest>=3.8.0
 pytest-cov==2.5.0
 six>=1.10.0
-enum34>=1.1.5
+enum-compat
+
 

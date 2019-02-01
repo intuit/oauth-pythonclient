@@ -22,7 +22,7 @@ Step 2: Get Authorization URL
 
 Get authorization url by specifying list of `intuitlib.enums.Scopes` ::
 
-    url = auth_client.get_authorization_url([Scopes.Accounting])
+    url = auth_client.get_authorization_url([Scopes.ACCOUNTING])
 
 After user connects to the app, the callback URL has params for `state`, `auth_code` and `realm_id` (`realm_id` for Accounting and Payments scopes only)
 
