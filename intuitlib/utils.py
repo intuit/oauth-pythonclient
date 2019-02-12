@@ -46,10 +46,8 @@ def get_discovery_doc(environment, session=None):
     else:
         discovery_url = DISCOVERY_URL['sandbox']
     
-    if session is not None and isinstance(session, Session):
-        response = session.get(url=discovery_url)
-    else:
-        response = requests.get(url=discovery_url, headers={'User-Agent': 'Mozilla/5.0'})
+
+    response = requests.get(url=discovery_url, headers={'User-Agent': 'Mozilla/5.0'})
         
     if response.status_code != 200:
         raise AuthClientError(response)
