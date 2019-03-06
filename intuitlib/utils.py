@@ -85,12 +85,12 @@ def send_request(method, url, header, obj, body=None, session=None, oauth1_heade
     """
 
     headers = ACCEPT_HEADER
-    headers.update(header)
+    header.update(headers)
 
     if session is not None and isinstance(session, Session):
-        response = session.request(method, url, headers=headers, data=body, auth=oauth1_header)
+        response = session.request(method, url, headers=header, data=body, auth=oauth1_header)
     else:
-        response = requests.request(method, url, headers=headers, data=body, auth=oauth1_header) 
+        response = requests.request(method, url, headers=header, data=body, auth=oauth1_header) 
 
     if response.status_code != 200:
         raise AuthClientError(response)
