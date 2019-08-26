@@ -32,7 +32,7 @@ class Scopes(Enum):
     # for whitelisted Beta apps only
     PAYROLL = 'com.intuit.quickbooks.payroll'
     PAYROLL_TIMETRACKING = 'com.intuit.quickbooks.payroll.timetracking'
-    PAROLL_BENEFITS = 'com.intuit.quickbooks.payroll.benefits'
+    PAYROLL_BENEFITS = 'com.intuit.quickbooks.payroll.benefits'
 
     # For migrated apps only
     # To not see consent page they should pass the following scopes - openid intuit_name email
