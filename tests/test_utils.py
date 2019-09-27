@@ -156,6 +156,13 @@ class TestUtils():
 
         is_valid = validate_id_token(sample_id_token, client_id, intuit_issuer, jwk_uri)
         assert not is_valid 
+    
+    def test_correct_padding(self):
+        id_token_part_val = 'eyJraW'
+        corrected_val = _correct_padding(val)
+        
+        assert corrected_val == 'eyJraW' 
+       
 
 if __name__ == '__main__':
     pytest.main()
