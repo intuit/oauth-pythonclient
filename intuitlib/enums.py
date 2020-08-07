@@ -33,6 +33,7 @@ class Scopes(Enum):
     PAYROLL = 'com.intuit.quickbooks.payroll'
     PAYROLL_TIMETRACKING = 'com.intuit.quickbooks.payroll.timetracking'
     PAYROLL_BENEFITS = 'com.intuit.quickbooks.payroll.benefits'
+    PAYSLIP_READ = 'com.intuit.quickbooks.payroll.payslip.read'
 
     # For migrated apps only
     # To not see consent page they should pass the following scopes - openid intuit_name email
