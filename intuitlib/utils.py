@@ -34,21 +34,22 @@ from intuitlib.config import DISCOVERY_URL, ACCEPT_HEADER
 
 def get_discovery_doc(environment, session=None):
     """Gets discovery doc based on environment specified.
-    
     :param environment: App environment, accepted values: 'sandbox','production','prod','e2e'
     :param session: `requests.Session` object if a session is already being used, defaults to None
     :return: Discovery doc response 
     :raises HTTPError: if response status != 200
     """
-
     if environment.lower() in ['production', 'prod']:
         discovery_url = DISCOVERY_URL['production']
-    else:
+    elif environment.lower() in ['sandbox', 'sand']:
         discovery_url = DISCOVERY_URL['sandbox']
-    
-
-    response = requests.get(url=discovery_url, headers={'User-Agent': 'Mozilla/5.0'})
+    else:
+        discovery_url = environment
         
+    if session is not None and isinstance(session, Session):
+        response = session.get(url=discovery_url)
+    else:
+        response = requests.get(url=discovery_url)
     if response.status_code != 200:
         raise AuthClientError(response)
     return response.json()

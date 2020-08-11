@@ -69,6 +69,18 @@ class AuthClient(requests.Session):
         self.x_refresh_token_expires_in = None
         self.id_token = id_token
         
+    def setAuthorizeURLs(self, urlObject):
+        """Set authorization url using custom values passed in the data dict
+        :param **data: data dict for custom authorizationURLS
+        :return: self
+        """
+        if urlObject is not None:
+            self.auth_endpoint = urlObject['auth_endpoint']
+            self.token_endpoint = urlObject['token_endpoint']
+            self.revoke_endpoint = urlObject['revoke_endpoint']
+            self.user_info_url = urlObject['user_info_url']
+        return None
+        
     def get_authorization_url(self, scopes, state_token=None):
         """Generates authorization url using scopes specified where user is redirected to
         
