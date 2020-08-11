@@ -52,8 +52,8 @@ class TestUtils():
         assert discovery_doc['issuer'] == 'https://oauth.platform.intuit.com/op/v1'
         assert discovery_doc['userinfo_endpoint'] == 'https://accounts.platform.intuit.com/v1/openid_connect/userinfo'
 
-    def test_get_discovery_doc_invalid_input(self):
-        discovery_doc = get_discovery_doc('random')
+    def test_get_discovery_doc_custom_url_input(self):
+        discovery_doc = get_discovery_doc('https://developer.intuit.com/.well-known/openid_sandbox_configuration/')
         
         assert discovery_doc['issuer'] =='https://oauth.platform.intuit.com/op/v1'
         assert discovery_doc['userinfo_endpoint'] == 'https://sandbox-accounts.platform.intuit.com/v1/openid_connect/userinfo'
