@@ -27,7 +27,7 @@ from intuitlib.utils import (
 )
 
 class AuthClient(requests.Session):
-    """Handles OAuth 2.0 and OpenID Connect flows to get access to User Info API, Accoutning APIs and Payments APIs
+    """Handles OAuth 2.0 and OpenID Connect flows to get access to User Info API, Accounting APIs and Payments APIs
     """
 
     def __init__(self, client_id, client_secret, redirect_uri, environment, state_token=None, access_token=None, refresh_token=None, id_token=None, realm_id=None):
