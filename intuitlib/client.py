@@ -15,8 +15,12 @@
 from __future__ import absolute_import
 
 import json
+try:
+    from urllib.parse import urlencode
+except ImportError:
+    from urllib import urlencode
+
 import requests
-from future.moves.urllib.parse import urlencode
 
 from intuitlib.utils import (
     get_discovery_doc,
