@@ -27,6 +27,14 @@ DISCOVERY_URL = {
     'production': 'https://developer.intuit.com/.well-known/openid_configuration/',
 }
 
+OAUTH2_ISSUER = "https://oauth.platform.intuit.com/op/v1"
+OAUTH2_AUTH_ENDPOINT = "https://appcenter.intuit.com/connect/oauth2"
+OAUTH2_TOKEN_ENDPOINT = "https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer"
+OAUTH2_REV_ENDPOINT = "https://developer.api.intuit.com/v2/oauth2/tokens/revoke"
+OAUTH2_JWKS_URI = "https://oauth.platform.intuit.com/op/v1/jwks"
+OAUTH2_SANDBOX = "https://sandbox-accounts.platform.intuit.com/v1/openid_connect/userinfo"
+OAUTH2_PROD = "https://accounts.platform.intuit.com/v1/openid_connect/userinfo"
+
 # info for user-agent
 PYTHON_VERSION = platform.python_version()
 OS_SYSTEM = platform.uname()[0]
