@@ -94,7 +94,7 @@ class AuthClient(requests.Session):
         :param **data: data dict for custom authorizationURLS
         :return: None
         """
-        if urlObject is not None:
+        if url_obj is not None:
             self.auth_endpoint = url_obj['auth_endpoint']
             self.token_endpoint = url_obj['token_endpoint']
             self.revoke_endpoint = url_obj['revoke_endpoint']
