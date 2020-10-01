@@ -25,10 +25,18 @@ from intuitlib.utils import (
     get_auth_header,
     send_request,
 )
+from intuitlib.config import (
+    OAUTH2_ISSUER,
+    OAUTH2_AUTH_ENDPOINT,
+    OAUTH2_TOKEN_ENDPOINT,
+    OAUTH2_REV_ENDPOINT,
+    OAUTH2_JWKS_URI,
+    OAUTH2_SANDBOX,
+    OAUTH2_PROD,
+)
 
 class AuthClient(requests.Session):
-    """Handles OAuth 2.0 and OpenID Connect flows to get access to User Info API, Accounting APIs and Payments APIs
-    """
+    """Handles OAuth 2.0 and OpenID Connect flows to get access to User Info API, Accounting APIs and Payments APIs"""
 
     def __init__(self, client_id, client_secret, redirect_uri, environment, state_token=None, access_token=None, refresh_token=None, id_token=None, realm_id=None):
         """Constructor for AuthClient
@@ -52,14 +60,16 @@ class AuthClient(requests.Session):
         self.environment = environment
         self.state_token = state_token
 
-        # Discovery doc contains endpoints based on environment specified
-        discovery_doc = get_discovery_doc(self.environment, session=self)
-        self.auth_endpoint = discovery_doc['authorization_endpoint']
-        self.token_endpoint = discovery_doc['token_endpoint']
-        self.revoke_endpoint = discovery_doc['revocation_endpoint']
-        self.issuer_uri = discovery_doc['issuer']
-        self.jwks_uri = discovery_doc['jwks_uri']
-        self.user_info_url = discovery_doc['userinfo_endpoint']
+        # OAUTH2 constant endpoints
+        self.auth_endpoint = OAUTH2_AUTH_ENDPOINT
+        self.token_endpoint = OAUTH2_TOKEN_ENDPOINT
+        self.revoke_endpoint = OAUTH2_REV_ENDPOINT
+        self.issuer_uri = OAUTH2_ISSUER
+        self.jwks_uri = OAUTH2_JWKS_URI
+        if self.environment.lower() in {'production', 'prod'}:
+            self.user_info_url = OAUTH2_PROD
+        else:
+            self.user_info_url = OAUTH2_SANDBOX
 
         # response values
         self.realm_id = realm_id
@@ -68,17 +78,27 @@ class AuthClient(requests.Session):
         self.refresh_token = refresh_token
         self.x_refresh_token_expires_in = None
         self.id_token = id_token
-        
-    def setAuthorizeURLs(self, urlObject):
+
+    def discover_authorize_urls(self):
+        """Set authorization url using discovery doc based on specified environment"""
+        discovery_doc = get_discovery_doc(self.environment, session=self)
+        self.auth_endpoint = discovery_doc['authorization_endpoint']
+        self.token_endpoint = discovery_doc['token_endpoint']
+        self.revoke_endpoint = discovery_doc['revocation_endpoint']
+        self.issuer_uri = discovery_doc['issuer']
+        self.jwks_uri = discovery_doc['jwks_uri']
+        self.user_info_url = discovery_doc['userinfo_endpoint']
+
+    def set_authorize_urls(self, url_obj):
         """Set authorization url using custom values passed in the data dict
         :param **data: data dict for custom authorizationURLS
-        :return: self
+        :return: None
         """
         if urlObject is not None:
-            self.auth_endpoint = urlObject['auth_endpoint']
-            self.token_endpoint = urlObject['token_endpoint']
-            self.revoke_endpoint = urlObject['revoke_endpoint']
-            self.user_info_url = urlObject['user_info_url']
+            self.auth_endpoint = url_obj['auth_endpoint']
+            self.token_endpoint = url_obj['token_endpoint']
+            self.revoke_endpoint = url_obj['revoke_endpoint']
+            self.user_info_url = url_obj['user_info_url']
         return None
         
     def get_authorization_url(self, scopes, state_token=None):
