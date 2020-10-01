@@ -21,12 +21,12 @@ from base64 import b64encode, b64decode, urlsafe_b64decode
 from datetime import datetime
 import random
 import string
+
 from jose import jwk
 import requests
 from requests.sessions import Session
 import six
 from requests_oauthlib import OAuth1
-
 
 from intuitlib.enums import Scopes
 from intuitlib.exceptions import AuthClientError
@@ -39,9 +39,9 @@ def get_discovery_doc(environment, session=None):
     :return: Discovery doc response 
     :raises HTTPError: if response status != 200
     """
-    if environment.lower() in ['production', 'prod']:
+    if environment.lower() in {'production', 'prod'}:
         discovery_url = DISCOVERY_URL['production']
-    elif environment.lower() in ['sandbox', 'sand']:
+    elif environment.lower() in {'sandbox', 'sand'}:
         discovery_url = DISCOVERY_URL['sandbox']
     else:
         discovery_url = environment
