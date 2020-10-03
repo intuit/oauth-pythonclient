@@ -29,7 +29,7 @@ from intuitlib.client import AuthClient
 from intuitlib.exceptions import AuthClientError
 from tests.helper import MockResponse
 
-class TestClient():
+class TestClient:
     
     auth_client = AuthClient('clientId','secret','https://www.mydemoapp.com/oauth-redirect','sandbox')
 

@@ -15,7 +15,6 @@
 from __future__ import absolute_import
 
 import json
-import requests
 from future.moves.urllib.parse import urlencode
 
 from intuitlib.utils import (
@@ -26,7 +25,7 @@ from intuitlib.utils import (
     send_request,
 )
 
-class AuthClient(requests.Session):
+class AuthClient:
     """Handles OAuth 2.0 and OpenID Connect flows to get access to User Info API, Accounting APIs and Payments APIs
     """
 
@@ -43,8 +42,6 @@ class AuthClient(requests.Session):
         :param id_token: ID Token for OpenID flow, defaults to None
         :param realm_id: QBO Realm/Company ID, defaults to None
         """
-
-        super(AuthClient, self).__init__()
 
         self.client_id = client_id
         self.client_secret = client_secret
