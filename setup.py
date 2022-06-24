@@ -35,7 +35,7 @@ setup(
         'requests>=2.13.0',
         'requests_oauthlib>=1.0.0',
         'six>=1.10.0',
-        'enum-compat',
+        'enum34; python_version < "3.4"',
     ],
     license='Apache 2.0',
     keywords='intuit quickbooks oauth auth openid client'
