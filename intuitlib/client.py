@@ -19,7 +19,7 @@ import requests
 
 try:
   from urllib.parse import urlencode
-except (ModuleNotFoundError, ModuleNotFoundError):
+except (ModuleNotFoundError, ImportError):
   from future.moves.urllib.parse import urlencode
 
 from intuitlib.utils import (
