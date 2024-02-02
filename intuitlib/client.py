@@ -16,7 +16,11 @@ from __future__ import absolute_import
 
 import json
 import requests
-from future.moves.urllib.parse import urlencode
+
+try:
+  from urllib.parse import urlencode
+except (ModuleNotFoundError, ImportError):
+  from future.moves.urllib.parse import urlencode
 
 from intuitlib.utils import (
     get_discovery_doc,
@@ -32,7 +36,7 @@ class AuthClient(requests.Session):
 
     def __init__(self, client_id, client_secret, redirect_uri, environment, state_token=None, access_token=None, refresh_token=None, id_token=None, realm_id=None):
         """Constructor for AuthClient
-        
+
         :param client_id: Client ID found in developer account Keys tab
         :param client_secret: Client Secret found in developer account Keys tab
         :param redirect_uri: Redirect URI, handles callback from provider
@@ -68,7 +72,7 @@ class AuthClient(requests.Session):
         self.refresh_token = refresh_token
         self.x_refresh_token_expires_in = None
         self.id_token = id_token
-        
+
     def setAuthorizeURLs(self, urlObject):
         """Set authorization url using custom values passed in the data dict
         :param **data: data dict for custom authorizationURLS
@@ -80,17 +84,17 @@ class AuthClient(requests.Session):
             self.revoke_endpoint = urlObject['revoke_endpoint']
             self.user_info_url = urlObject['user_info_url']
         return None
-        
+
     def get_authorization_url(self, scopes, state_token=None):
         """Generates authorization url using scopes specified where user is redirected to
-        
+
         :param scopes: Scopes for OAuth/OpenId flow
         :type scopes: list of enum, `intuitlib.enums.Scopes`
         :param state_token: CSRF token, defaults to None
         :return: Authorization url
         """
 
-        state = state_token or self.state_token 
+        state = state_token or self.state_token
         if state is None:
             state = generate_token()
         self.state_token = state
@@ -100,14 +104,14 @@ class AuthClient(requests.Session):
             'response_type': 'code',
             'scope': scopes_to_string(scopes),
             'redirect_uri': self.redirect_uri,
-            'state': self.state_token 
+            'state': self.state_token
         }
 
         return '?'.join([self.auth_endpoint, urlencode(url_params)])
 
     def get_bearer_token(self, auth_code, realm_id=None):
         """Gets access_token and refresh_token using authorization code
-        
+
         :param auth_code: Authorization code received from redirect_uri
         :param realm_id: Realm ID/Company ID of the QBO company
         :raises `intuitlib.exceptions.AuthClientError`: if response status != 200
@@ -116,7 +120,7 @@ class AuthClient(requests.Session):
         realm = realm_id or self.realm_id
         if realm is not None:
             self.realm_id = realm
-        
+
         headers = {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': get_auth_header(self.client_id, self.client_secret)
@@ -128,11 +132,11 @@ class AuthClient(requests.Session):
             'redirect_uri': self.redirect_uri
         }
 
-        send_request('POST', self.token_endpoint, headers, self, body=urlencode(body), session=self)   
+        send_request('POST', self.token_endpoint, headers, self, body=urlencode(body), session=self)
 
     def refresh(self, refresh_token=None):
-        """Gets fresh access_token and refresh_token 
-        
+        """Gets fresh access_token and refresh_token
+
         :param refresh_token: Refresh Token
         :raises ValueError: if Refresh Token value not specified
         :raises `intuitlib.exceptions.AuthClientError`: if response status != 200
@@ -176,12 +180,12 @@ class AuthClient(requests.Session):
             'token': token_to_revoke
         }
 
-        send_request('POST', self.revoke_endpoint, headers, self, body=json.dumps(body), session=self) 
+        send_request('POST', self.revoke_endpoint, headers, self, body=json.dumps(body), session=self)
         return True
-            
+
     def get_user_info(self, access_token=None):
         """Gets User Info based on OpenID scopes specified
-        
+
         :param access_token: Access token
         :raises ValueError: if Refresh Token or Access Token value not specified
         :raises `intuitlib.exceptions.AuthClientError`: if response status != 200
