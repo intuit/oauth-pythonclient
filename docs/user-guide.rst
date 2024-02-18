@@ -24,14 +24,14 @@ Get authorization url by specifying list of `intuitlib.enums.Scopes` ::
 
     url = auth_client.get_authorization_url([Scopes.ACCOUNTING])
 
-After user connects to the app, the callback URL has params for `state`, `auth_code` and `realm_id` (`realm_id` for Accounting and Payments scopes only)
+After user connects to the app, the callback URL has params for `state`, `code` and `realmId` (`realmId` for Accounting and Payments scopes only)
 
 Step 3: Get Tokens and Expiry details
 ++++++++++++++++++++++++
 
-The `auth_code` from URL params from Step 2 is used to get bearer tokens. Optionally, `realm_id` is passed to set this property for `auth_client` object. ::
+The `code` from URL params from Step 2 is used to get bearer tokens. Optionally, `realmId` is passed to set this property for `auth_client` object. ::
         
-    auth_client.get_bearer_token(auth_code, realm_id=realm_id)
+    auth_client.get_bearer_token(code, realm_id=realmId)
 
 After successful response, `access_token`, `refresh_token`, etc properties of `auth_client` object are set.
     
