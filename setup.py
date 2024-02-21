@@ -36,6 +36,7 @@ setup(
         'six>=1.10.0',
         'enum-compat',
     ],
+    python_requires='>=3',
     license='Apache 2.0',
     keywords='intuit quickbooks oauth auth openid client'
 )

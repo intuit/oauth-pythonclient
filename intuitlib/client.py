@@ -13,12 +13,9 @@
  # limitations under the License.
 
 import json
-import requests
+from urllib.parse import urlencode
 
-try:
-  from urllib.parse import urlencode
-except (ModuleNotFoundError, ImportError):
-  from future.moves.urllib.parse import urlencode
+import requests
 
 from intuitlib.utils import (
     get_discovery_doc,
