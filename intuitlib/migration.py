@@ -14,7 +14,6 @@
 
 """This module helps in migrating OAuth 1.0a tokens to OAuth 2.0
 """
-from __future__ import absolute_import
 
 import json
 from requests_oauthlib import OAuth1
