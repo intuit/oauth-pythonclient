@@ -20,11 +20,10 @@ from base64 import b64encode, b64decode, urlsafe_b64decode
 from datetime import datetime
 import random
 import string
-from jose import jwk
 import requests
 from requests.sessions import Session
 import six
-from requests_oauthlib import OAuth1
+from oic.utils.keyio import KeyBundle
 
 
 from intuitlib.enums import Scopes
@@ -165,9 +164,10 @@ def validate_id_token(id_token, client_id, intuit_issuer, jwk_uri):
         return False
 
     message = id_token_parts[0] + '.' + id_token_parts[1]
-    keys_dict = get_jwk(id_token_header['kid'], jwk_uri)
+    key_dict = get_jwk(id_token_header['kid'], jwk_uri)
 
-    public_key = jwk.construct(keys_dict)
+    key_bundle = KeyBundle([key_dict])
+    public_key = key_bundle.keys()[0]
     is_signature_valid = public_key.verify(message.encode('utf-8'), id_token_signature)
     return is_signature_valid
 
@@ -186,7 +186,11 @@ def get_jwk(kid, jwk_uri):
         raise AuthClientError(response)
     data = response.json()
     keys = next(key for key in data["keys"] if key['kid'] == kid)
-    return keys
+
+    if not keys:
+        raise AuthClientError(f"KID {kid} not found in JWKs")
+
+    return keys[0]
 
 def _correct_padding(val):
     """Correct padding for JWT
