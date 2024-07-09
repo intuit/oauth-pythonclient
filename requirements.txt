@@ -7,4 +7,4 @@ pytest>=3.8.0
 pytest-cov==2.5.0
 six>=1.10.0
 enum-compat
-pyjwt>=2.0.0
+pyjwt[crypto]>=2.0.0
