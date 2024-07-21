@@ -164,7 +164,7 @@ def validate_id_token(id_token, client_id, intuit_issuer, jwk_uri):
         return False
 
     message = id_token_parts[0] + '.' + id_token_parts[1]
-    public_key = get_jwk(id_token_header['kid'], jwk_uri)
+    public_key = get_jwk(id_token_header['kid'], jwk_uri).key
 
     is_signature_valid = public_key.verify(message.encode('utf-8'), id_token_signature)
     return is_signature_valid
