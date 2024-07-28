@@ -16,19 +16,19 @@
 """
 
 import json
+import random
+import requests
+import six
+import string
 from base64 import b64encode, b64decode, urlsafe_b64decode
 from datetime import datetime
-import random
-import string
-import requests
+from jwt import PyJWKSet, PyJWTError
 from requests.sessions import Session
-import six
-from jwt import PyJWKSet
 
-
+from intuitlib.config import DISCOVERY_URL, ACCEPT_HEADER
 from intuitlib.enums import Scopes
 from intuitlib.exceptions import AuthClientError
-from intuitlib.config import DISCOVERY_URL, ACCEPT_HEADER
+
 
 def get_discovery_doc(environment, session=None):
     """Gets discovery doc based on environment specified.
@@ -165,9 +165,11 @@ def validate_id_token(id_token, client_id, intuit_issuer, jwk_uri):
 
     message = id_token_parts[0] + '.' + id_token_parts[1]
     public_key = get_jwk(id_token_header['kid'], jwk_uri).key
-
-    is_signature_valid = public_key.verify(message.encode('utf-8'), id_token_signature)
-    return is_signature_valid
+    try:
+        jwt.decode(id_token, public_key, audience=client_id, algorithms=['RS256'])
+        return True
+    except PyJWTError:
+        return False
 
 def get_jwk(kid, jwk_uri):
     """Get JWK for public key information
