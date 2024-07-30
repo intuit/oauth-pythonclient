@@ -16,13 +16,13 @@
 """
 
 import json
+import jwt
 import random
 import requests
 import six
 import string
 from base64 import b64encode, b64decode, urlsafe_b64decode
 from datetime import datetime
-from jwt import PyJWKSet, PyJWTError
 from requests.sessions import Session
 
 from intuitlib.config import DISCOVERY_URL, ACCEPT_HEADER
@@ -152,7 +152,6 @@ def validate_id_token(id_token, client_id, intuit_issuer, jwk_uri):
 
     id_token_header = json.loads(b64decode(_correct_padding(id_token_parts[0])).decode('ascii'))
     id_token_payload = json.loads(b64decode(_correct_padding(id_token_parts[1])).decode('ascii'))
-    id_token_signature = urlsafe_b64decode(((_correct_padding(id_token_parts[2])).encode('ascii')))
 
     if id_token_payload['iss'] != intuit_issuer:
         return False
@@ -163,12 +162,11 @@ def validate_id_token(id_token, client_id, intuit_issuer, jwk_uri):
     if id_token_payload['exp'] < current_time:
         return False
 
-    message = id_token_parts[0] + '.' + id_token_parts[1]
     public_key = get_jwk(id_token_header['kid'], jwk_uri).key
     try:
         jwt.decode(id_token, public_key, audience=client_id, algorithms=['RS256'])
         return True
-    except PyJWTError:
+    except jwt.PyJWTError:
         return False
 
 def get_jwk(kid, jwk_uri):
@@ -185,7 +183,7 @@ def get_jwk(kid, jwk_uri):
     if response.status_code != 200:
         raise AuthClientError(response)
     data = response.json()
-    return PyJWKSet.from_dict(data)[kid]
+    return jwt.PyJWKSet.from_dict(data)[kid]
 
 def _correct_padding(val):
     """Correct padding for JWT
