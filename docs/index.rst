@@ -3,28 +3,33 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Intuit's OAuth2 and OpenID Client 
+Intuit's OAuth2 and OpenID Connect Client
 =================================
 
-`View on GitHub <https://github.com/intuit/oauth-pythonclient>`_
+The official Python client library for working with Intuit APIs. 
+The `AuthClient` object response can be used for the 
+`Intuit UserInfo API <https://developer.intuit.com/app/developer/qbo/docs/develop/authentication-and-authorization/openid-connect#obtaining-user-profile-information>`_, 
+`QuickBooks Accounting API <https://developer.intuit.com/app/developer/qbo/docs/learn/explore-the-quickbooks-online-api>`_, 
+and `QuickBooks Payments API <https://developer.intuit.com/app/developer/qbpayments/docs/learn/explore-the-quickbooks-payments-api>`_. 
 
-This client library is meant to work with Intuit's OAuth and OpenID implementation. The `bearer_token` response can be used for User Info API, Accounting API and Payments API. It supports:
+This library supports:
 
-- Generating Authorization URL
-- Getting OAuth2 Bearer Token 
-- Getting User Info 
-- Validating OpenID token
-- Refreshing OAuth2 Token
-- Revoking OAuth2 Token
+- Raising authorization requests
+- Requesting OAuth2 bearer (access) tokens
+- Refreshing OAuth2 tokens
+- Revoking OAuth2 tokens
+- Validating ID tokens
+- Fetching profile attributes from UserInfo
+- Various utility methods
 - Migrating tokens from OAuth1.0 to OAuth2
+
+`View this library on GitHub <https://github.com/intuit/oauth-pythonclient>`_
 
 Install Client 
 --------------
 This library can be installed using `pip <https://pypi.org/project/pip/>`_::
 
     $ pip install intuit-oauth
-
-View it on GitHub `here <https://github.com/intuit/oauth-pythonclient>`_
 
 Docs
 ----

@@ -21,7 +21,7 @@ import random
 import requests
 import six
 import string
-from base64 import b64encode, b64decode, urlsafe_b64decode
+from base64 import b64encode, b64decode
 from datetime import datetime
 from requests.sessions import Session
 
