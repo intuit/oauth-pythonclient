@@ -30,7 +30,7 @@ setup(
     packages=find_packages(exclude=('tests*',)),
     namespace_packages=('intuitlib',),
     install_requires=[
-        'python_jose>=2.0.2',
+        'pyjwt[crypto]>=2.0.0',
         'requests>=2.13.0',
         'requests_oauthlib>=1.0.0',
         'six>=1.10.0',
