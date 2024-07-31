@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Intuit's OAuth2 and OpenID Connect Client
-=================================
+==========================================
 
 The official Python client library for working with Intuit APIs. 
 The `AuthClient` object response can be used for the 
