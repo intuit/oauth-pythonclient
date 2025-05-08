@@ -28,12 +28,17 @@ class Scopes(Enum):
     OPENID = 'openid'
     ACCOUNTING = 'com.intuit.quickbooks.accounting'
     PAYMENT = 'com.intuit.quickbooks.payment'
-    
+   
     # for whitelisted Beta apps only
     PAYROLL = 'com.intuit.quickbooks.payroll'
     PAYROLL_TIMETRACKING = 'com.intuit.quickbooks.payroll.timetracking'
     PAYROLL_BENEFITS = 'com.intuit.quickbooks.payroll.benefits'
     PAYSLIP_READ = 'com.intuit.quickbooks.payroll.payslip.read'
+    PROJECT MANAGEMENT = 'project-management.project'
+    CUSTOM_FIELDS_READ = 'app-foundations.custom-field-definitions.read'
+    CUSTOM_FIELDS = 'app-foundations.custom-field-definitions'
+    EMPLOYEE_COMPENSATION = 'payroll.compensation.read'
+    
 
     # For migrated apps only
     # To not see consent page they should pass the following scopes - openid intuit_name email
