@@ -34,7 +34,7 @@ class Scopes(Enum):
     PAYROLL_TIMETRACKING = 'com.intuit.quickbooks.payroll.timetracking'
     PAYROLL_BENEFITS = 'com.intuit.quickbooks.payroll.benefits'
     PAYSLIP_READ = 'com.intuit.quickbooks.payroll.payslip.read'
-    PROJECT MANAGEMENT = 'project-management.project'
+    PROJECT_MANAGEMENT = 'project-management.project'
     CUSTOM_FIELDS_READ = 'app-foundations.custom-field-definitions.read'
     CUSTOM_FIELDS = 'app-foundations.custom-field-definitions'
     EMPLOYEE_COMPENSATION = 'payroll.compensation.read'
