@@ -38,6 +38,7 @@ class Scopes(Enum):
     CUSTOM_FIELDS_READ = 'app-foundations.custom-field-definitions.read'
     CUSTOM_FIELDS = 'app-foundations.custom-field-definitions'
     EMPLOYEE_COMPENSATION = 'payroll.compensation.read'
+    TAX = 'indirect-tax.tax-calculation.quickbooks'
     
 
     # For migrated apps only
