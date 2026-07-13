@@ -33,7 +33,11 @@ The `auth_code` from URL params from Step 2 is used to get bearer tokens. Option
         
     auth_client.get_bearer_token(auth_code, realm_id=realm_id)
 
-After successful response, `access_token`, `refresh_token`, etc properties of `auth_client` object are set.
+To include the refresh token hard expiry in the response, pass `include_refresh_token_hard_expires_in=True`. The response will contain the `x_refresh_token_hard_expires_in` attribute indicating the refresh token lifespan (in seconds) ::
+
+    auth_client.get_bearer_token(auth_code, realm_id=realm_id, include_refresh_token_hard_expires_in=True)
+
+After successful response, `access_token`, `refresh_token`, `expires_in`, `x_refresh_token_expires_in`, `x_refresh_token_hard_expires_in`, etc properties of `auth_client` object are set.
     
 Step 4 (OAuth): Sample API Call
 +++++++++++++++++++++++++++++++
@@ -70,6 +74,10 @@ Validity for Intuit's `access_token` is 60 min and `refresh_token` is 24 hours. 
 Or by passing the `refresh_token` as a parameter: ::
 
     auth_client.refresh(refresh_token='EnterRefreshTokenHere')
+
+To include the refresh token hard expiry in the response, pass `include_refresh_token_hard_expires_in=True` ::
+
+    auth_client.refresh(include_refresh_token_hard_expires_in=True)
 
 Revoke Tokens
 -------------

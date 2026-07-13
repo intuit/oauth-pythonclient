@@ -69,6 +69,7 @@ class AuthClient(requests.Session):
         self.expires_in = None
         self.refresh_token = refresh_token
         self.x_refresh_token_expires_in = None
+        self.x_refresh_token_hard_expires_in = None
         self.id_token = id_token
 
     def setAuthorizeURLs(self, urlObject):
@@ -107,11 +108,13 @@ class AuthClient(requests.Session):
 
         return '?'.join([self.auth_endpoint, urlencode(url_params)])
 
-    def get_bearer_token(self, auth_code, realm_id=None):
+    def get_bearer_token(self, auth_code, realm_id=None, include_refresh_token_hard_expires_in=False):
         """Gets access_token and refresh_token using authorization code
 
         :param auth_code: Authorization code received from redirect_uri
         :param realm_id: Realm ID/Company ID of the QBO company
+        :param include_refresh_token_hard_expires_in: When True, the response will contain the
+            x_refresh_token_hard_expires_in attribute indicating the refresh token lifespan
         :raises `intuitlib.exceptions.AuthClientError`: if response status != 200
         """
 
@@ -124,6 +127,9 @@ class AuthClient(requests.Session):
             'Authorization': get_auth_header(self.client_id, self.client_secret)
         }
 
+        if include_refresh_token_hard_expires_in:
+            headers['x-include-refresh-token-hard-expires-in'] = 'true'
+
         body = {
             'grant_type': 'authorization_code',
             'code': auth_code,
@@ -132,10 +138,12 @@ class AuthClient(requests.Session):
 
         send_request('POST', self.token_endpoint, headers, self, body=urlencode(body), session=self)
 
-    def refresh(self, refresh_token=None):
+    def refresh(self, refresh_token=None, include_refresh_token_hard_expires_in=False):
         """Gets fresh access_token and refresh_token
 
         :param refresh_token: Refresh Token
+        :param include_refresh_token_hard_expires_in: When True, the response will contain the
+            x_refresh_token_hard_expires_in attribute indicating the refresh token lifespan
         :raises ValueError: if Refresh Token value not specified
         :raises `intuitlib.exceptions.AuthClientError`: if response status != 200
         """
@@ -148,6 +156,9 @@ class AuthClient(requests.Session):
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': get_auth_header(self.client_id, self.client_secret)
         }
+
+        if include_refresh_token_hard_expires_in:
+            headers['x-include-refresh-token-hard-expires-in'] = 'true'
 
         body = {
             'grant_type': 'refresh_token',
