@@ -37,3 +37,9 @@ ACCEPT_HEADER = {
     'Accept': 'application/json',
     'User-Agent': '{0}-{1}-{2}-{3} {4} {5} {6}'.format('Intuit-OAuthClient', version.__version__,'Python', PYTHON_VERSION, OS_SYSTEM, OS_RELEASE_VER, OS_MACHINE)
 }
+
+# Header to request refresh token hard expiry info on token-endpoint calls
+INCLUDE_REFRESH_TOKEN_HARD_EXPIRES_IN_HEADER = 'x-include-refresh-token-hard-expires-in'
+
+# Response field key for the refresh token hard expiry lifespan (seconds)
+X_REFRESH_TOKEN_HARD_EXPIRES_IN = 'x_refresh_token_hard_expires_in'

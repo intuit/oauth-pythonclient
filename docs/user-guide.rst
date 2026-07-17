@@ -27,18 +27,22 @@ Get authorization url by specifying list of `intuitlib.enums.Scopes` ::
 After user connects to the app, the callback URL has params for `state`, `auth_code` and `realm_id` (`realm_id` for Accounting and Payments scopes only)
 
 Step 3: Get Tokens and Expiry details
-++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++
 
 The `auth_code` from URL params from Step 2 is used to get bearer tokens. Optionally, `realm_id` is passed to set this property for `auth_client` object. ::
         
     auth_client.get_bearer_token(auth_code, realm_id=realm_id)
 
-To include the refresh token hard expiry in the response, pass `include_refresh_token_hard_expires_in=True`. The response will contain the `x_refresh_token_hard_expires_in` attribute indicating the refresh token lifespan (in seconds) ::
+Refresh Token Hard Expiry
++++++++++++++++++++++++++
 
-    auth_client.get_bearer_token(auth_code, realm_id=realm_id, include_refresh_token_hard_expires_in=True)
+To opt in Refresh Token Hard Expiry, call `set_include_refresh_token_hard_expires_in` on the client.
 
-After successful response, `access_token`, `refresh_token`, `expires_in`, `x_refresh_token_expires_in`, `x_refresh_token_hard_expires_in`, etc properties of `auth_client` object are set.
-    
+    auth_client.set_include_refresh_token_hard_expires_in(True)
+
+After successful response, `access_token`, `refresh_token`, `expires_in`, `x_refresh_token_expires_in`, etc properties of `auth_client` object are set.
+
+
 Step 4 (OAuth): Sample API Call
 +++++++++++++++++++++++++++++++
 
@@ -75,9 +79,9 @@ Or by passing the `refresh_token` as a parameter: ::
 
     auth_client.refresh(refresh_token='EnterRefreshTokenHere')
 
-To include the refresh token hard expiry in the response, pass `include_refresh_token_hard_expires_in=True` ::
+To opt in Hard Expiry during refresh calls, call `set_include_refresh_token_hard_expires_in` on the client.
 
-    auth_client.refresh(include_refresh_token_hard_expires_in=True)
+    auth_client.set_include_refresh_token_hard_expires_in(True)
 
 Revoke Tokens
 -------------
@@ -118,7 +122,3 @@ In case of HTTP Errors, the client raises `intuitlib.exceptions.AuthClientError`
         print(e.status_code)
         print(e.content)
         print(e.intuit_tid)
-
-
-
-

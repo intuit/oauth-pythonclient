@@ -20,6 +20,7 @@ try:
 except (ModuleNotFoundError, ImportError):
   from future.moves.urllib.parse import urlencode
 
+from intuitlib.config import INCLUDE_REFRESH_TOKEN_HARD_EXPIRES_IN_HEADER
 from intuitlib.utils import (
     get_discovery_doc,
     generate_token,
@@ -72,6 +73,44 @@ class AuthClient(requests.Session):
         self.x_refresh_token_hard_expires_in = None
         self.id_token = id_token
 
+        # When True, token-endpoint requests include the x-include-refresh-token-hard-expires-in header so the response carries
+        # x_refresh_token_hard_expires_in (absolute refresh-token lifespan).
+        self._include_refresh_token_hard_expires_in = False
+
+    def set_include_refresh_token_hard_expires_in(self, enabled=False):
+        """Opt in to receive refresh token hard expiry on token-endpoint responses.
+
+        When enabled, every subsequent get_bearer_token/refresh call sends the
+        `x-include-refresh-token-hard-expires-in` header. The parsed value is
+        available on `auth_client.x_refresh_token_hard_expires_in`."""
+
+        if isinstance(enabled, bool):
+            self._include_refresh_token_hard_expires_in = enabled
+        elif isinstance(enabled, str):
+            normalized = enabled.strip().lower()
+            if normalized == 'true':
+                self._include_refresh_token_hard_expires_in = True
+            else:
+                self._include_refresh_token_hard_expires_in = False
+        else:
+            self._include_refresh_token_hard_expires_in = False
+        return self
+
+    def get_include_refresh_token_hard_expires_in(self):
+        """Whether the refresh token hard expiry header is currently being sent.
+        :return: bool
+        """
+        return self._include_refresh_token_hard_expires_in
+
+    def _apply_refresh_token_hard_expires_in_header(self, headers):
+        """Conditionally add the hard-expires opt-in header.
+        Uses the instance flag set via set_include_refresh_token_hard_expires_in.
+        """
+       
+        if self._include_refresh_token_hard_expires_in:
+            headers[INCLUDE_REFRESH_TOKEN_HARD_EXPIRES_IN_HEADER] = 'true'
+        return headers
+
     def setAuthorizeURLs(self, urlObject):
         """Set authorization url using custom values passed in the data dict
         :param **data: data dict for custom authorizationURLS
@@ -108,13 +147,11 @@ class AuthClient(requests.Session):
 
         return '?'.join([self.auth_endpoint, urlencode(url_params)])
 
-    def get_bearer_token(self, auth_code, realm_id=None, include_refresh_token_hard_expires_in=False):
+    def get_bearer_token(self, auth_code, realm_id=None):
         """Gets access_token and refresh_token using authorization code
 
         :param auth_code: Authorization code received from redirect_uri
         :param realm_id: Realm ID/Company ID of the QBO company
-        :param include_refresh_token_hard_expires_in: When True, the response will contain the
-            x_refresh_token_hard_expires_in attribute indicating the refresh token lifespan
         :raises `intuitlib.exceptions.AuthClientError`: if response status != 200
         """
 
@@ -126,9 +163,9 @@ class AuthClient(requests.Session):
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': get_auth_header(self.client_id, self.client_secret)
         }
-
-        if include_refresh_token_hard_expires_in:
-            headers['x-include-refresh-token-hard-expires-in'] = 'true'
+        headers = self._apply_refresh_token_hard_expires_in_header(
+            headers
+        )
 
         body = {
             'grant_type': 'authorization_code',
@@ -138,12 +175,10 @@ class AuthClient(requests.Session):
 
         send_request('POST', self.token_endpoint, headers, self, body=urlencode(body), session=self)
 
-    def refresh(self, refresh_token=None, include_refresh_token_hard_expires_in=False):
+    def refresh(self, refresh_token=None):
         """Gets fresh access_token and refresh_token
 
         :param refresh_token: Refresh Token
-        :param include_refresh_token_hard_expires_in: When True, the response will contain the
-            x_refresh_token_hard_expires_in attribute indicating the refresh token lifespan
         :raises ValueError: if Refresh Token value not specified
         :raises `intuitlib.exceptions.AuthClientError`: if response status != 200
         """
@@ -156,9 +191,9 @@ class AuthClient(requests.Session):
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': get_auth_header(self.client_id, self.client_secret)
         }
-
-        if include_refresh_token_hard_expires_in:
-            headers['x-include-refresh-token-hard-expires-in'] = 'true'
+        headers = self._apply_refresh_token_hard_expires_in_header(
+            headers
+        )
 
         body = {
             'grant_type': 'refresh_token',
