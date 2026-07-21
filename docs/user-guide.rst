@@ -17,6 +17,12 @@ Step 1: Instantiate AuthClient object
 
 Valid values for environment include `sandbox` and `production`. `redirect_uri` should be set in your Intuit Developer app's Keys tab under the right environment.
 
+Track refresh token hard expiry (x_refresh_token_hard_expires_in) on both token and refresh responses.
+
+To opt in, set `include_refresh_token_hard_expires_in` on the client to True::
+
+    auth_client.include_refresh_token_hard_expires_in = True
+
 Step 2: Get Authorization URL
 +++++++++++++++++++++++++++++
 
@@ -33,14 +39,8 @@ The `auth_code` from URL params from Step 2 is used to get bearer tokens. Option
         
     auth_client.get_bearer_token(auth_code, realm_id=realm_id)
 
-Refresh Token Hard Expiry
-+++++++++++++++++++++++++
-
-To opt in Refresh Token Hard Expiry, call `set_include_refresh_token_hard_expires_in` on the client.
-
-    auth_client.set_include_refresh_token_hard_expires_in(True)
-
-After successful response, `access_token`, `refresh_token`, `expires_in`, `x_refresh_token_expires_in`, etc properties of `auth_client` object are set.
+After successful response, `access_token`, `refresh_token`, `expires_in`, `x_refresh_token_expires_in`, `x_refresh_token_hard_expires_in`,
+etc properties of `auth_client` object are set.
 
 
 Step 4 (OAuth): Sample API Call
@@ -79,9 +79,7 @@ Or by passing the `refresh_token` as a parameter: ::
 
     auth_client.refresh(refresh_token='EnterRefreshTokenHere')
 
-To opt in Hard Expiry during refresh calls, call `set_include_refresh_token_hard_expires_in` on the client.
-
-    auth_client.set_include_refresh_token_hard_expires_in(True)
+If you opted in in Step 1, `refresh()` also returns `x_refresh_token_hard_expires_in` when the server provides it.
 
 Revoke Tokens
 -------------

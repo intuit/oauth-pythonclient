@@ -77,13 +77,18 @@ class AuthClient(requests.Session):
         # x_refresh_token_hard_expires_in (absolute refresh-token lifespan).
         self._include_refresh_token_hard_expires_in = False
 
-    def set_include_refresh_token_hard_expires_in(self, enabled=False):
-        """Opt in to receive refresh token hard expiry on token-endpoint responses.
+    @property
+    def include_refresh_token_hard_expires_in(self):
+        """Whether token-endpoint requests send the hard-expires opt-in header.
 
-        When enabled, every subsequent get_bearer_token/refresh call sends the
-        `x-include-refresh-token-hard-expires-in` header. The parsed value is
-        available on `auth_client.x_refresh_token_hard_expires_in`."""
+        When True, every subsequent get_bearer_token/refresh call sends
+        `x-include-refresh-token-hard-expires-in`. The parsed value is available
+        on `auth_client.x_refresh_token_hard_expires_in`.
+        """
+        return self._include_refresh_token_hard_expires_in
 
+    @include_refresh_token_hard_expires_in.setter
+    def include_refresh_token_hard_expires_in(self, enabled):
         if isinstance(enabled, bool):
             self._include_refresh_token_hard_expires_in = enabled
         elif isinstance(enabled, str):
@@ -96,17 +101,10 @@ class AuthClient(requests.Session):
             self._include_refresh_token_hard_expires_in = False
         return self
 
-    def get_include_refresh_token_hard_expires_in(self):
-        """Whether the refresh token hard expiry header is currently being sent.
-        :return: bool
-        """
-        return self._include_refresh_token_hard_expires_in
-
     def _apply_refresh_token_hard_expires_in_header(self, headers):
         """Conditionally add the hard-expires opt-in header.
-        Uses the instance flag set via set_include_refresh_token_hard_expires_in.
+        Uses the instance flag include_refresh_token_hard_expires_in.
         """
-       
         if self._include_refresh_token_hard_expires_in:
             headers[INCLUDE_REFRESH_TOKEN_HARD_EXPIRES_IN_HEADER] = 'true'
         return headers
@@ -163,6 +161,7 @@ class AuthClient(requests.Session):
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': get_auth_header(self.client_id, self.client_secret)
         }
+
         headers = self._apply_refresh_token_hard_expires_in_header(
             headers
         )
@@ -194,7 +193,6 @@ class AuthClient(requests.Session):
         headers = self._apply_refresh_token_hard_expires_in_header(
             headers
         )
-
         body = {
             'grant_type': 'refresh_token',
             'refresh_token': token
