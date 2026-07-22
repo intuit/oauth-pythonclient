@@ -20,6 +20,7 @@ try:
 except (ModuleNotFoundError, ImportError):
   from future.moves.urllib.parse import urlencode
 
+from intuitlib.config import INCLUDE_REFRESH_TOKEN_HARD_EXPIRES_IN_HEADER
 from intuitlib.utils import (
     get_discovery_doc,
     generate_token,
@@ -69,7 +70,44 @@ class AuthClient(requests.Session):
         self.expires_in = None
         self.refresh_token = refresh_token
         self.x_refresh_token_expires_in = None
+        self.x_refresh_token_hard_expires_in = None
         self.id_token = id_token
+
+        # When True, token-endpoint requests include the x-include-refresh-token-hard-expires-in header so the response carries
+        # x_refresh_token_hard_expires_in (absolute refresh-token lifespan).
+        self._include_refresh_token_hard_expires_in = False
+
+    @property
+    def include_refresh_token_hard_expires_in(self):
+        """Whether token-endpoint requests send the hard-expires opt-in header.
+
+        When True, every subsequent get_bearer_token/refresh call sends
+        `x-include-refresh-token-hard-expires-in`. The parsed value is available
+        on `auth_client.x_refresh_token_hard_expires_in`.
+        """
+        return self._include_refresh_token_hard_expires_in
+
+    @include_refresh_token_hard_expires_in.setter
+    def include_refresh_token_hard_expires_in(self, enabled):
+        if isinstance(enabled, bool):
+            self._include_refresh_token_hard_expires_in = enabled
+        elif isinstance(enabled, str):
+            normalized = enabled.strip().lower()
+            if normalized == 'true':
+                self._include_refresh_token_hard_expires_in = True
+            else:
+                self._include_refresh_token_hard_expires_in = False
+        else:
+            self._include_refresh_token_hard_expires_in = False
+        return self
+
+    def _apply_refresh_token_hard_expires_in_header(self, headers):
+        """Conditionally add the hard-expires opt-in header.
+        Uses the instance flag include_refresh_token_hard_expires_in.
+        """
+        if self._include_refresh_token_hard_expires_in:
+            headers[INCLUDE_REFRESH_TOKEN_HARD_EXPIRES_IN_HEADER] = 'true'
+        return headers
 
     def setAuthorizeURLs(self, urlObject):
         """Set authorization url using custom values passed in the data dict
@@ -124,6 +162,10 @@ class AuthClient(requests.Session):
             'Authorization': get_auth_header(self.client_id, self.client_secret)
         }
 
+        headers = self._apply_refresh_token_hard_expires_in_header(
+            headers
+        )
+
         body = {
             'grant_type': 'authorization_code',
             'code': auth_code,
@@ -148,7 +190,9 @@ class AuthClient(requests.Session):
             'Content-Type': 'application/x-www-form-urlencoded',
             'Authorization': get_auth_header(self.client_id, self.client_secret)
         }
-
+        headers = self._apply_refresh_token_hard_expires_in_header(
+            headers
+        )
         body = {
             'grant_type': 'refresh_token',
             'refresh_token': token

@@ -17,6 +17,12 @@ Step 1: Instantiate AuthClient object
 
 Valid values for environment include `sandbox` and `production`. `redirect_uri` should be set in your Intuit Developer app's Keys tab under the right environment.
 
+Track refresh token hard expiry (x_refresh_token_hard_expires_in) on both token and refresh responses.
+
+To opt in, set `include_refresh_token_hard_expires_in` on the client to True::
+
+    auth_client.include_refresh_token_hard_expires_in = True
+
 Step 2: Get Authorization URL
 +++++++++++++++++++++++++++++
 
@@ -27,14 +33,16 @@ Get authorization url by specifying list of `intuitlib.enums.Scopes` ::
 After user connects to the app, the callback URL has params for `state`, `auth_code` and `realm_id` (`realm_id` for Accounting and Payments scopes only)
 
 Step 3: Get Tokens and Expiry details
-++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++
 
 The `auth_code` from URL params from Step 2 is used to get bearer tokens. Optionally, `realm_id` is passed to set this property for `auth_client` object. ::
         
     auth_client.get_bearer_token(auth_code, realm_id=realm_id)
 
-After successful response, `access_token`, `refresh_token`, etc properties of `auth_client` object are set.
-    
+After successful response, `access_token`, `refresh_token`, `expires_in`, `x_refresh_token_expires_in`, `x_refresh_token_hard_expires_in`,
+etc properties of `auth_client` object are set.
+
+
 Step 4 (OAuth): Sample API Call
 +++++++++++++++++++++++++++++++
 
@@ -70,6 +78,8 @@ Validity for Intuit's `access_token` is 60 min and `refresh_token` is 24 hours. 
 Or by passing the `refresh_token` as a parameter: ::
 
     auth_client.refresh(refresh_token='EnterRefreshTokenHere')
+
+If you opted in in Step 1, `refresh()` also returns `x_refresh_token_hard_expires_in` when the server provides it.
 
 Revoke Tokens
 -------------
@@ -110,7 +120,3 @@ In case of HTTP Errors, the client raises `intuitlib.exceptions.AuthClientError`
         print(e.status_code)
         print(e.content)
         print(e.intuit_tid)
-
-
-
-
