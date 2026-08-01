@@ -13,12 +13,9 @@
  # limitations under the License.
 
 import json
-import requests
+from urllib.parse import urlencode
 
-try:
-  from urllib.parse import urlencode
-except (ModuleNotFoundError, ImportError):
-  from future.moves.urllib.parse import urlencode
+import requests
 
 from intuitlib.config import INCLUDE_REFRESH_TOKEN_HARD_EXPIRES_IN_HEADER
 from intuitlib.utils import (
