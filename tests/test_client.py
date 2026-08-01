@@ -25,6 +25,7 @@ except ImportError:
     from urlparse import urlparse, parse_qs, urlsplit
 
 from intuitlib.enums import Scopes
+from intuitlib.config import ACCEPT_HEADER
 from intuitlib.client import AuthClient
 from intuitlib.exceptions import AuthClientError
 from tests.helper import MockResponse
@@ -91,12 +92,17 @@ class TestClient():
     
     @mock.patch('intuitlib.utils.requests.Session.request')
     def test_get_user_info_ok(self, mock_session):
+
+        header_before_call = ACCEPT_HEADER.copy()
+
         mock_resp = self.mock_request(status=200, content={
             'givenName': 'Test'
         })
         mock_session.return_value = mock_resp
         
         response = self.auth_client.get_user_info(access_token='token')
+        # verify that we didn't pollute the default headers used for subsequent calls.
+        assert header_before_call == ACCEPT_HEADER.copy()
         assert response.json()['givenName'] == 'Test'
 
     @mock.patch('intuitlib.utils.requests.Session.request')
