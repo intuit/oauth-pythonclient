@@ -12,7 +12,6 @@
  # See the License for the specific language governing permissions and
  # limitations under the License.
 
-import requests
 
 class AuthClientError(Exception):
     """AuthClient Error object in case API response status != 200
@@ -33,3 +32,6 @@ class AuthClientError(Exception):
         self.timestamp = response.headers.get('Date', None) 
 
         Exception.__init__(self, 'HTTP status {0}, error message: {1}, intuit_tid {2} at time {3}'.format(self.status_code, self.content, self.intuit_tid, self.timestamp)) 
+
+    def __reduce__(self):
+        return self.__class__, (self.response,)
