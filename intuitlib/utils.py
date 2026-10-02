@@ -153,9 +153,13 @@ def validate_id_token(id_token, client_id, intuit_issuer, jwk_uri):
     id_token_header = json.loads(b64decode(_correct_padding(id_token_parts[0])).decode('ascii'))
     id_token_payload = json.loads(b64decode(_correct_padding(id_token_parts[1])).decode('ascii'))
 
+    audience = id_token_payload['aud']
+    if isinstance(audience, six.string_types):
+        audience = [audience]
+
     if id_token_payload['iss'] != intuit_issuer:
         return False
-    elif id_token_payload['aud'][0] != client_id:
+    elif audience[0] != client_id:
         return False
 
     current_time = (datetime.utcnow() - datetime(1970, 1, 1)).total_seconds()
